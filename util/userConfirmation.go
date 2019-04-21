@@ -9,6 +9,7 @@ import (
 	"os"
 )
 
+// Simple function to handle user confirmation tasks
 func AskForConfirmation() bool {
 	reader := bufio.NewReader(os.Stdin)
 	response, err := reader.ReadString('\n')
@@ -27,6 +28,7 @@ func AskForConfirmation() bool {
 		return AskForConfirmation()
 	}
 }
+
 
 func posString(slice []string, element string) int {
 	for index, elem := range slice {

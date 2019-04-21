@@ -23,6 +23,7 @@ func main() {
 	install()
 }
 
+// Make sure we have the information needed to install.
 func setup() {
 	reader := bufio.NewReader(os.Stdin)
 
@@ -39,6 +40,7 @@ func setup() {
 	fmt.Printf("Install directory: %v \n", *extDir)
 
 }
+
 
 func install() {
 	fPath := strings.TrimRight(*fPath, "\n")
@@ -57,6 +59,7 @@ func install() {
 		prompt = util.AskForConfirmation()
 		if prompt == true {
 			os.RemoveAll(tmp)
+			// umask value is required for Mkdir
 			os.Mkdir(tmp, 0775)
 			fmt.Printf("Temp directory created: %s\n", tmp)
 		} else if prompt == false {
@@ -66,7 +69,7 @@ func install() {
 		}
 	}
 
-	// unzip out file
+	// unzip extension file
 	files, err := util.Unzip(fPath, tmp)
 	if err != nil {
 		log.Fatal(err)
@@ -98,6 +101,7 @@ func install() {
 	}
 }
 
+// extract UUID value from $extDir/metadata.json
 func getMeta(src string) (string) {
 	jsonFile, err := os.Open(src)
 	if err != nil {

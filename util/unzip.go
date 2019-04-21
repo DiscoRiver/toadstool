@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 )
 
+// Unzips source (src) into destination (dest) and provides feedback on files processed. Entire 
+// destination path is created if a file in the chain doesn't exist.
 func Unzip(src string, dest string) ([]string, error) {
 
     var filenames []string
