@@ -6,13 +6,11 @@ import (
 	"fmt"
 	"strings"
 	"os"
-	"io"
 	"io/ioutil"
 	"bufio"
 	"log"
-	"archive/zip"
-	"path/filepath"
 	"encoding/json"
+	"github.com/discoriver/gnome-extension-installer/util"
 )
 
 var homeDir, _ = os.LookupEnv("HOME")
@@ -56,7 +54,7 @@ func install() {
 		fmt.Printf("Temp directory not created, already exists: %s\n", tmp)
 		fmt.Printf("The directory %v should not exist. Perhaps this program previously terminated unexpectedly? Would you like to delete this directory and proceed with the installation? (yes/no): ", tmp)		   
 		
-		prompt = askForConfirmation()
+		prompt = util.AskForConfirmation()
 		if prompt == true {
 			os.RemoveAll(tmp)
 			os.Mkdir(tmp, 0775)
@@ -69,7 +67,7 @@ func install() {
 	}
 
 	// unzip out file
-	files, err := Unzip(fPath, tmp)
+	files, err := util.Unzip(fPath, tmp)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -86,7 +84,7 @@ func install() {
 		os.Rename(tmp, finalDir)
 	} else {
 		fmt.Printf("WARNING: Attempting to install extension at %v, but directory already exists. Continuing will overwrite this directory. Would you like to continue? (yes/no): ", finalDir)
-		prompt = askForConfirmation()
+		prompt = util.AskForConfirmation()
 		if prompt == true {
 			fmt.Printf("Renaming temp directory to %v\n", finalDir)
 			os.RemoveAll(finalDir)
@@ -98,38 +96,6 @@ func install() {
 			log.Fatal("There was a fatal error with the confirmation, it's not safe to continue.")
 		}
 	}
-}
-
-func askForConfirmation() bool {
-	reader := bufio.NewReader(os.Stdin)
-	response, err := reader.ReadString('\n')
-	response = strings.Replace(response, "\n", "", -1)
-	if err != nil {
-		log.Fatal(err)
-	}
-	okayResponses := []string{"yes", "Yes", "YES"}
-	nokayResponses := []string{"no", "No", "NO"}
-	if containsString(okayResponses, response) {
-		return true
-	} else if containsString(nokayResponses, response) {
-		return false
-	} else {
-		fmt.Println("Please type yes or no and then press enter:")
-		return askForConfirmation()
-	}
-}
-
-func posString(slice []string, element string) int {
-	for index, elem := range slice {
-		if elem == element {
-			return index
-		}
-	}
-	return -1
-}
-
-func containsString(slice []string, element string) bool {
-	return !(posString(slice, element) == -1)
 }
 
 func getMeta(src string) (string) {
@@ -150,60 +116,4 @@ func getMeta(src string) (string) {
 
 	extUUID := uuid.UUID
 	return extUUID
-}
-
-func Unzip(src string, dest string) ([]string, error) {
-
-    var filenames []string
-
-    r, err := zip.OpenReader(src)
-    if err != nil {
-        return filenames, err
-    }
-    defer r.Close()
-
-    for _, f := range r.File {
-
-        // Store filename/path for returning and using later on
-        fpath := filepath.Join(dest, f.Name)
-
-        // Check for ZipSlip. More Info: http://bit.ly/2MsjAWE
-        if !strings.HasPrefix(fpath, filepath.Clean(dest)+string(os.PathSeparator)) {
-            return filenames, fmt.Errorf("%s: illegal file path", fpath)
-        }
-
-        filenames = append(filenames, fpath)
-
-        if f.FileInfo().IsDir() {
-            // Make Folder
-            os.MkdirAll(fpath, os.ModePerm)
-            continue
-        }
-
-        // Make File
-        if err = os.MkdirAll(filepath.Dir(fpath), os.ModePerm); err != nil {
-            return filenames, err
-        }
-
-        outFile, err := os.OpenFile(fpath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
-        if err != nil {
-            return filenames, err
-        }
-
-        rc, err := f.Open()
-        if err != nil {
-            return filenames, err
-        }
-
-        _, err = io.Copy(outFile, rc)
-
-        // Close the file without defer to close before next iteration of loop
-        outFile.Close()
-        rc.Close()
-
-        if err != nil {
-            return filenames, err
-        }
-    }
-    return filenames, nil
 }
