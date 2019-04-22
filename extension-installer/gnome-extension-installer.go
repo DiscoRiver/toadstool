@@ -10,7 +10,7 @@ import (
 	"bufio"
 	"log"
 	"encoding/json"
-	"github.com/discoriver/gnome-extension-installer/util"
+	"github.com/discoriver/toadstool/util"
 )
 
 var homeDir, _ = os.LookupEnv("HOME")
