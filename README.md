@@ -1,4 +1,6 @@
-# Gnome Extension Installer
+# Toadstool 
+
+_It takes their jacket, and seats them at the best table._
 
 ### Usage
 
