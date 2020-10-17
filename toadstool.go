@@ -41,7 +41,6 @@ func setup() {
 
 }
 
-
 func install() {
 	fPath := strings.TrimRight(*fPath, "\n")
 	extDir := strings.TrimRight(*extDir, "\n")
