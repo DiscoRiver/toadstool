@@ -14,7 +14,7 @@ func initToadstool() {
 		fmt.Println("unable to determine extensions directory, check flags and/or config file.")
 		os.Exit(1)
 	}
-	fmt.Printf("Referencing extensions in %s", extensionsDirectory)
+	fmt.Printf("Referencing extensions in %s\n", extensionsDirectory)
 }
 
 func determineExtensionsDir() {
