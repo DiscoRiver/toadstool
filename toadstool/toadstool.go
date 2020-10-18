@@ -8,7 +8,7 @@ import (
 
 var extensionsDirectory string
 
-func init() {
+func initToadstool() {
 	determineExtensionsDir()
 	if extensionsDirectory == "" {
 		fmt.Println("unable to determine extensions directory, check flags and/or config file.")

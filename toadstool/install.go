@@ -7,6 +7,8 @@ import (
 )
 
 func InstallExtension(extensionZip string) {
+	initToadstool()
+
 	if v := isValidZipFile(extensionZip); v != true {
 		fmt.Printf("SKIPPING %s, not a valid .zip directory. \n", extensionZip)
 		return
