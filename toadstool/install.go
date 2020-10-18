@@ -62,7 +62,13 @@ func InstallExtension(extensionZip string) {
 				installFailureTeardown(tmpDir)
 				return
 			}
+		} else {
+			fmt.Printf("SKIPPING %s, user requested no overwrite on existing extension\n", extensionZip)
+			installFailureTeardown(tmpDir)
+			return
 		}
+		fmt.Printf("INSTALLATION COMPLETE: %s", extensionUUID)
+
 	}
 }
 
