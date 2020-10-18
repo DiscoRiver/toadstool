@@ -15,7 +15,6 @@ func getMetaFromExtention(extensionDir string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Println("Found metadata.json.")
 	defer jsonFile.Close()
 
 	type UUID struct {
