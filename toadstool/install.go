@@ -14,7 +14,7 @@ func InstallExtension(extensionZip string) {
 		return
 	}
 	// Protection for concurrency
-	tmpDir := fmt.Sprintf("%s%s", extensionsDirectory, shortuuid.New())
+	tmpDir := fmt.Sprintf("%s/%s", extensionsDirectory, shortuuid.New())
 
 	// Make temp directory
 	err := makeDirectory(tmpDir, 0775)
