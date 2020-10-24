@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/discoriver/toadstool/toadstool"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -25,9 +26,12 @@ func Execute() error {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
+	cobra.OnInitialize(initConfig, toadstool.InitToadstool)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.toadstool)")
+	rootCmd.PersistentFlags().String("extensions-dir", "", "Gnome extensions directory override (default is $HOME/.local/share/gnome-shell/extensions")
+
+	viper.BindPFlag("gnome.extensionsDirectory", rootCmd.PersistentFlags().Lookup("extensions-dir"))
 }
 
 func er(msg interface{}) {

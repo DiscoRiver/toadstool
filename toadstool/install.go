@@ -6,9 +6,8 @@ import (
 	"github.com/lithammer/shortuuid"
 )
 
+// InstallExtension performs a single extension install, from extensionZip.
 func InstallExtension(extensionZip string) {
-	initToadstool()
-
 	if v := isValidZipFile(extensionZip); v != true {
 		fmt.Printf("SKIPPING %s, not a valid .zip directory. \n", extensionZip)
 		return
@@ -46,7 +45,7 @@ func InstallExtension(extensionZip string) {
 			fmt.Printf("SKIPPING %s, couldn't rename directory: %s\n", extensionZip, err)
 			installFailureTeardown(tmpDir)
 		}
-		fmt.Printf("INSTALLATION COMPLETE: %s", extensionUUID)
+		fmt.Println("Installation complete: ", extensionUUID)
 	} else {
 		if r := askYesNo(fmt.Sprintf("WARNING: Attempting to install extension at %v, but directory already exists. Continuing will overwrite this directory. Would you like to continue? (yes/no): ", finalExtensionDirectory)); r == "yes" {
 			err := removeDirectory(finalExtensionDirectory)

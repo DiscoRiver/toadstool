@@ -8,11 +8,11 @@ import (
 var extensionZip string
 
 func init() {
+	// Flags
+	installCmd.PersistentFlags().StringVarP(&extensionZip, "extension", "e","", "Gnome extension to install")
 
-	installCmd.PersistentFlags().StringVar(&extensionZip, "extension", "", "Gnome extension to install")
-
+	// Add Command
 	rootCmd.AddCommand(installCmd)
-
 }
 
 var installCmd = &cobra.Command {

@@ -24,7 +24,7 @@ func doesDirectoryExist(dir string) bool {
 
 func makeDirectory(dir string, perm os.FileMode) (err error) {
 	if err = os.Mkdir(dir, perm); err == nil {
-		fmt.Printf("created directory: %s\n", dir)
+		fmt.Printf("Created directory: %s\n", dir)
 		return nil
 	}
 	return err
@@ -32,7 +32,7 @@ func makeDirectory(dir string, perm os.FileMode) (err error) {
 
 func removeDirectory(dir string) (err error) {
 	if err = os.RemoveAll(dir); err == nil {
-		fmt.Printf("removed directory: %s\n", dir)
+		fmt.Printf("Removed directory: %s\n", dir)
 		return nil
 	}
 	return err
@@ -40,7 +40,7 @@ func removeDirectory(dir string) (err error) {
 
 func renameDirectory(from string, to string) (err error) {
 	if err = os.Rename(from, to); err == nil {
-		fmt.Printf("renamed directory: %s --> %s\n", from, to)
+		fmt.Printf("Renamed directory: %s --> %s\n", from, to)
 		return nil
 	}
 	return err
