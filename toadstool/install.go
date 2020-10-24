@@ -67,7 +67,6 @@ func InstallExtension(extensionZip string) {
 			return
 		}
 		fmt.Printf("INSTALLATION COMPLETE: %s", extensionUUID)
-
 	}
 }
 
