@@ -27,7 +27,7 @@ Use "toadstool [command] --help" for more information about a command.
 ```
 
 #### Install
-Install extension at path `-e`:
+Install extension at path `-e`. Must be a valid .zip file:
 ```
   -e, --extension string   Gnome extension to install
 ```
