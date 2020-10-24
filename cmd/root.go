@@ -29,7 +29,7 @@ func init() {
 	cobra.OnInitialize(initConfig, toadstool.InitToadstool)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.toadstool)")
-	rootCmd.PersistentFlags().String("extensions-dir", "", "Gnome extensions directory override (default is $HOME/.local/share/gnome-shell/extensions")
+	rootCmd.PersistentFlags().String("extensions-dir", "", "Gnome extensions directory override (default is $HOME/.local/share/gnome-shell/extensions)")
 
 	viper.BindPFlag("gnome.extensionsDirectory", rootCmd.PersistentFlags().Lookup("extensions-dir"))
 }
