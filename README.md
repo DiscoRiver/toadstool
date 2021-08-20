@@ -2,7 +2,7 @@
 
 _It takes their jacket, and seats them at the best table._
 
-Toadstool is a Gnome extension helper.
+Toadstool is a Gnome extension manager.
 
 ### Usage
 
